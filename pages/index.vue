@@ -1,12 +1,13 @@
 <template>
   <div>
-    <h1>お手伝い何しましたか？</h1>
+    <Counter></Counter>
+    <Counter></Counter>
     <Counter></Counter>
   </div>
 </template>
 
 <script>
-import counter from "~/components/Counter.vue";
+import Counter from "~/components/Counter.vue";
 
 export default {
   components: {

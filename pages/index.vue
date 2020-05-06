@@ -1,30 +1,39 @@
 <template>
-  <div>
-    <Counter></Counter>
-    <Counter></Counter>
-    <Counter></Counter>
+  <div class="links">
+    <Home v-if="!isLogin"></Home>
+    <Counter v-if="isLogin" :user="userData"></Counter>
   </div>
 </template>
-
 <script>
+import firebase from "@/plugins/firebase";
+import Home from "~/components/Home.vue";
 import Counter from "~/components/Counter.vue";
-
 export default {
   components: {
+    Home,
     Counter
+  },
+  asyncData(context) {
+    return { name: "Hello,World", isLogin: false, userData: null };
+  },
+  mounted: function() {
+    firebase.auth().onAuthStateChanged(user => {
+      console.log(user);
+      if (user) {
+        this.isLogin = true;
+        this.userData = user;
+      } else {
+        this.isLogin = false;
+        this.userData = null;
+      }
+    });
+  },
+  methods: {
+    googleLogin() {
+      firebase
+        .auth()
+        .signInWithRedirect(new firebase.auth.GoogleAuthProvider());
+    }
   }
-  // ,
-  // computed: {
-  //   count ()  { return this.$store.state.counter.count }
-  // },
-  // methods:{
-  //   dish(e){
-  //     this.$store.commit('counter/add')
-  //   }
-  //   //ここに訂正ボタンとか承認ボタンとか後からつける
-  // }
 };
 </script>
-
-<style>
-</style>

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Counter from "~/components/Counter.vue";
+import Counter from "~/components/myPage/Counter.vue";
 
 export default {
   // 新規登録されるcounterのデータを一時的に格納しておく

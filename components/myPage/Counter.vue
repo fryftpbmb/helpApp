@@ -1,7 +1,5 @@
 <template>
   <div>
-    <p>Counter</p>
-    <p>こんにちは、{{ user.diaplayName }}</p>
     <!-- counter.jsの数字の値を参照して表示させる -->
     <h2>{{ name }}</h2>
     <div>counter: {{ counter }}</div>
@@ -14,7 +12,6 @@
 <script>
 import firebase from "~/plugins/firebase";
 import { firebaseAction, firestoreAction } from "vuexfire";
-
 const db = firebase.firestore();
 const counterRef = db.collection("counters");
 export default {
@@ -25,9 +22,6 @@ export default {
     };
   },
   methods: {
-    logout() {
-      firebase.auth().signOut();
-    },
     countUp: function(state, title) {
       this.counter++;
     },

@@ -1,17 +1,17 @@
 <template>
   <div class="links">
     <Home v-if="!isLogin"></Home>
-    <Counter v-if="isLogin" :user="userData"></Counter>
+    <myPage v-if="isLogin"></myPage>
   </div>
 </template>
 <script>
 import firebase from "@/plugins/firebase";
 import Home from "~/components/Home.vue";
-import Counter from "~/components/Counter.vue";
+import myPage from "~/components/myPage.vue";
 export default {
   components: {
     Home,
-    Counter
+    myPage
   },
   asyncData(context) {
     return { name: "Hello,World", isLogin: false, userData: null };

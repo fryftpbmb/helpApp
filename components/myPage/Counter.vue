@@ -4,54 +4,44 @@
     <h2>{{ name }}</h2>
     <div>counter: {{ counter }}</div>
     <!--ボタンがクリックされた時commitメソッドを使ってstoreのcountUpを呼び出す -->
-    <button v-on:click="countUp">+1</button>
-    <button v-on:click="reset">reset</button>
+    <button @click="countUp('wasing')">+1</button>
+    <button @click="reset">reset</button>
   </div>
 </template>
 
 <script>
 import firebase from "~/plugins/firebase";
 import { firebaseAction, firestoreAction } from "vuexfire";
-const db = firebase.firestore();
-const counterRef = db.collection("counters");
 export default {
-  props: ["name", "user"],
+  props: ["name"],
   data: function() {
     return {
       counter: 0
     };
   },
   methods: {
-    countUp: function(state, title) {
+    countUp() {
       this.counter++;
+      const db = firebase.firestore();
+      let userRef = db.collection("new");
+      userRef
+        .add({
+          [this.name]: 1
+        })
+        .then(function(docRef) {
+          console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(function(error) {
+          console.error("Error adding document: ", error);
+        });
     },
-    reset: function(state) {
+    reset(state) {
       this.counter = 0;
       // ここに承認ボタンとか追加するならする
     }
   },
   mounted() {
     this.$emit("", this.counter);
-  },
-  init: firestoreAction(({ bindrestoreRef }) => {
-    bindFirestoreRef("counters", counterRef);
-  }),
-  add: firestoreAction((context, name) => {
-    if (name.trim()) {
-      counterRef.add({
-        name: name,
-        done: false,
-        created: firebase.firestore.FiedValue.serverTimestamp()
-      });
-    }
-  }),
-  remove: firestoreAction((context, id) => {
-    counterRef.doc(id).delete();
-  }),
-  toggle: firestoreAction((contect, todo) => {
-    counterRef.doc(counter.is).update({
-      done: !counter.done
-    });
-  })
+  }
 };
 </script>

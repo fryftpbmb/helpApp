@@ -14,17 +14,14 @@ export default {
     myPage
   },
   asyncData(context) {
-    return { name: "Hello,World", isLogin: false, userData: null };
+    return { name: "Hello,World", isLogin: false };
   },
   mounted: function() {
     firebase.auth().onAuthStateChanged(user => {
-      console.log(user);
       if (user) {
         this.isLogin = true;
-        this.userData = user;
       } else {
         this.isLogin = false;
-        this.userData = null;
       }
     });
   },

@@ -2,9 +2,9 @@
   <div>
     <p>Counter</p>
     <p>なんのお手伝いをしましたか？</p>
-    <Counter name="washing" :user="userData"></Counter>
-    <Counter name="dish" :user="userData"></Counter>
-    <Counter name="toilet" :user="userData"></Counter>
+    <Counter name="washing"></Counter>
+    <Counter name="dish"></Counter>
+    <Counter name="toilet"></Counter>
     <button @click="logOut">ログアウト</button>
   </div>
 </template>

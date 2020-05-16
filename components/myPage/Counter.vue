@@ -12,6 +12,8 @@
 <script>
 import firebase from "~/plugins/firebase";
 import { firebaseAction, firestoreAction } from "vuexfire";
+const db = firebase.firestore();
+let userRef = db.collection("users");
 export default {
   props: ["name"],
   data: function() {
@@ -22,11 +24,10 @@ export default {
   methods: {
     countUp() {
       this.counter++;
-      const db = firebase.firestore();
-      let userRef = db.collection("new");
+
       userRef
         .add({
-          [this.name]: 1
+          category: this.name
         })
         .then(function(docRef) {
           console.log("Document written with ID: ", docRef.id);
@@ -35,9 +36,17 @@ export default {
           console.error("Error adding document: ", error);
         });
     },
-    reset(state) {
+    reset() {
       this.counter = 0;
-      // ここに承認ボタンとか追加するならする
+      userRef
+        .doc("DC")
+        .delete()
+        .then(function() {
+          console.log("Document successfully deleted!");
+        })
+        .catch(function(error) {
+          console.error("Error removing document: ", error);
+        });
     }
   },
   mounted() {
